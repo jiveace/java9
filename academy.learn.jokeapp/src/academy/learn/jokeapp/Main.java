@@ -1,19 +1,38 @@
 package academy.learn.jokeapp;
 
 import academy.learn.jokeserver.*;
+import academy.learn.jokeserver.kid.KidJokeServer;
+import academy.learn.jokeserver.programmer.CoderJokeServer;
+
+import java.util.LinkedHashMap;
+import java.util.Scanner;
 
 public class Main {
 
-	public static void main(String [] args) {
+    public static void main(String[] args) {
 
-	 final int NUM_JOKES = 20;
+        LinkedHashMap<String, JokeServer> servers = new LinkedHashMap<>();
 
-     JokeServer s = new JokeServer();
+        servers.put("1", new KidJokeServer());
+        servers.put("2", new CoderJokeServer());
 
-     System.out.printf("Displaying %d random jokes from %s\n", NUM_JOKES , s.name());
-     System.out.println("-------------------------------------------");
-        for (int i=0; i<NUM_JOKES; i++)
-            System.out.println(s.getJoke() + "\n") ;
+        Scanner scanner = new Scanner(System.in);
+        String choice = "";
+        do {
 
+            servers.forEach((k, v) -> System.out.printf("%s: %s\n", k, v.name()));
+
+            System.out.print("(Q to quit) : ");
+            choice = scanner.nextLine().trim().toUpperCase();
+
+            if (servers.containsKey(choice)) {
+                System.out.println(servers.get(choice).getJoke() + "\n");
+            } else if (!choice.equals("Q")) {
+                System.out.println("Sorry, try again. ");
+            }
+
+        } while (!choice.equals("Q"));
+
+        System.out.println("Thanks! I hope you laughed!!");
     }
 }

@@ -1,4 +1,4 @@
-package academy.learn.jokeserver.internal;
+package academy.learn.jokeserver.kid.internal;
 
 public class Filter {
 

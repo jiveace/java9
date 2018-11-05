@@ -1,17 +1,17 @@
-package academy.learn.jokeserver;
+package academy.learn.jokeserver.programmer;
 
-import java.util.logging.*;
+import academy.learn.jokeserver.JokeServer;
+
 import java.util.List;
 
-import academy.learn.jokeserver.kid.internal.Filter;
 /**
  * Created by Frank J. Mitropoulos.
  */
-public class JokeServer {
+public class CoderJokeServer implements JokeServer {
 
 
     private List<String> jokes = List.of(
-           "Some people, when confronted with a problem, think, 'I know, I'll use threads' - and then two they hav erpoblesms.",
+            "Some people, when confronted with a problem, think, 'I know, I'll use threads' - and then two they hav erpoblesms.",
             "Why do programmers always mix up Halloween and Christmas?\nBecause Oct 31 equals Dec 25.",
             "There are only 10 kinds of people in this world: those who know binary and those who don't.",
             "Have you heard about the new Cray super computer?  It's so fast, it executes an infinite loop in 6 seconds.",
@@ -28,14 +28,13 @@ public class JokeServer {
             "Why do Java programmers wear glasses?\nBecause they don't C#!",
             "A group of DBAs walk into a diner.\nOne waved over the waiter: 'Can we join these tables?'.",
             "I've got a really good UDP joke to tell you, but I don't know if you'll get it"
-
     );
 
     private static int getRandomInteger(int maximum, int minimum){ return ((int) (Math.random()*(maximum - minimum))) + minimum; }
 
     public String getJoke() {
         int index = getRandomInteger(jokes.size(),0) ;
-        return Filter.clean(jokes.get(index));
+        return jokes.get(index);
     }
 
     public int availableJokes() {
@@ -43,7 +42,7 @@ public class JokeServer {
     }
 
     public String name() {
-        return "Joke Server";
+        return "Coder Joke Server";
     }
 
 }
