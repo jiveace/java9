@@ -1,3 +1,0 @@
-C:\Users\imaxwell\IdeaProjects\java9\migrationExample\src\academy\learnprogramming\main\Main.java
-C:\Users\imaxwell\IdeaProjects\java9\migrationExample\src\academy\learnprogramming\models\Address.java
-C:\Users\imaxwell\IdeaProjects\java9\migrationExample\src\academy\learnprogramming\models\Person.java
