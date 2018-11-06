@@ -1,20 +1,22 @@
 package academy.learn.jokeapp;
 
 import academy.learn.jokeserver.*;
-import academy.learn.jokeserver.kid.KidJokeServer;
-import academy.learn.jokeserver.programmer.CoderJokeServer;
 
 import java.util.LinkedHashMap;
 import java.util.Scanner;
+import java.util.ServiceLoader;
 
 public class Main {
 
     public static void main(String[] args) {
 
+        ServiceLoader<JokeServer> loader = ServiceLoader.load(JokeServer.class);
         LinkedHashMap<String, JokeServer> servers = new LinkedHashMap<>();
 
-        servers.put("1", new KidJokeServer());
-        servers.put("2", new CoderJokeServer());
+        int key = 1;
+        for (JokeServer s : loader) {
+            servers.put(String.valueOf(key++), s);
+        }
 
         Scanner scanner = new Scanner(System.in);
         String choice = "";
