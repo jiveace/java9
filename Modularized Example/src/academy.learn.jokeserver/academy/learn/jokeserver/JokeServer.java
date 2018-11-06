@@ -3,7 +3,7 @@ package academy.learn.jokeserver;
 import java.util.logging.*;
 import java.util.List;
 
-import academy.learn.jokeserver.kid.internal.Filter;
+import academy.learn.jokeserver.wrestler.internal.Filter;
 /**
  * Created by Frank J. Mitropoulos.
  */

@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.Scanner;
 import java.util.ServiceLoader;
 
-public class Main {
+public class CommandLine {
 
     public static void main(String[] args) {
 
