@@ -8,6 +8,7 @@ import jdk.incubator.http.HttpResponse;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
+import java.util.concurrent.CompletableFuture;
 
 public class Main {
 
@@ -16,6 +17,27 @@ public class Main {
 
         getURLSync(url);
         postURLSync(url);
+        getURLAsync(url);
+    }
+
+    private static void getURLAsync(String url) throws Exception {
+        HttpClient client = HttpClient.newHttpClient();
+
+        CompletableFuture<HttpResponse<String>> future = client.sendAsync(
+                HttpRequest
+                    .newBuilder(new URI(url))
+                    .GET()
+                    .build(),
+                HttpResponse.BodyHandler.asString()
+        );
+
+        System.out.println("Request has been made...");
+
+        while (!future.isDone())
+            System.out.println("Working...");
+
+        System.out.println("Request complete");
+        processResponse(future.get());
     }
 
     public static void getURLSync(String url) throws Exception {
