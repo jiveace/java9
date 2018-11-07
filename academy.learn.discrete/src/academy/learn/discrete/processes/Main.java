@@ -2,24 +2,47 @@ package academy.learn.discrete.processes;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.stream.Stream;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
         // Get the info of the current process
         ProcessHandle processHandle = ProcessHandle.current();
         processHandle.pid();
         dumpProcessInfo(processHandle);
 
-        //Create a process
-        ProcessBuilder pb = new ProcessBuilder("java", "-jar", "process.jar", "Test app");
-        // File is checked in, but apparently in wrong directory
-        Process p = pb.start();
-
         // Destroy a process
         Long pidOfExpendableProcess = 15156L;
         Optional<ProcessHandle> optPh = ProcessHandle.of(pidOfExpendableProcess);
-        optPh.get().destroy();
+        //Throw exception of Process doesn't exist
+//        optPh.get().destroy();
+
+        // Get all running processes
+        Stream<ProcessHandle> allProcs = ProcessHandle.allProcesses();
+        allProcs.limit(10).forEach(ph -> dumpProcessInfo(ph));
+
+        System.out.println("******");
+
+        // Get children of a process
+        Stream<ProcessHandle> children = processHandle.children();
+        children.forEach(ph -> dumpProcessInfo(ph));
+
+        // Running our own process
+        // AND
+        // Executing code on process termination
+        ProcessBuilder processBuilder = new ProcessBuilder("java", "-jar", "process.jar", "XXXXX");
+        Process p = processBuilder.start();
+        CompletableFuture<Process> future = p.onExit();
+
+        // Synchronous
+//        future.thenAccept(process -> System.out.printf("Process [%d] terminated", process.pid()));
+//        future.get();
+
+        //Asynchronous
+        future.whenCompleteAsync((plop, e) -> System.out.println("Completed XXXXX"));
     }
 
     static void dumpProcessInfo(ProcessHandle ph) {
